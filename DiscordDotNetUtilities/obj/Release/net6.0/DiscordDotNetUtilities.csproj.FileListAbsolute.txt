@@ -1,0 +1,12 @@
+C:\Users\rrodd\Code\DiscordDotNetUtilities\DiscordDotNetUtilities\obj\Release\net6.0\DiscordDotNetUtilities.csproj.AssemblyReference.cache
+C:\Users\rrodd\Code\DiscordDotNetUtilities\DiscordDotNetUtilities\obj\Release\net6.0\DiscordDotNetUtilities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rrodd\Code\DiscordDotNetUtilities\DiscordDotNetUtilities\obj\Release\net6.0\DiscordDotNetUtilities.AssemblyInfoInputs.cache
+C:\Users\rrodd\Code\DiscordDotNetUtilities\DiscordDotNetUtilities\obj\Release\net6.0\DiscordDotNetUtilities.AssemblyInfo.cs
+C:\Users\rrodd\Code\DiscordDotNetUtilities\DiscordDotNetUtilities\obj\Release\net6.0\DiscordDotNetUtilities.csproj.CoreCompileInputs.cache
+C:\Users\rrodd\Code\DiscordDotNetUtilities\DiscordDotNetUtilities\bin\Release\net6.0\DiscordDotNetUtilities.deps.json
+C:\Users\rrodd\Code\DiscordDotNetUtilities\DiscordDotNetUtilities\bin\Release\net6.0\DiscordDotNetUtilities.dll
+C:\Users\rrodd\Code\DiscordDotNetUtilities\DiscordDotNetUtilities\bin\Release\net6.0\DiscordDotNetUtilities.pdb
+C:\Users\rrodd\Code\DiscordDotNetUtilities\DiscordDotNetUtilities\obj\Release\net6.0\DiscordDotNetUtilities.dll
+C:\Users\rrodd\Code\DiscordDotNetUtilities\DiscordDotNetUtilities\obj\Release\net6.0\refint\DiscordDotNetUtilities.dll
+C:\Users\rrodd\Code\DiscordDotNetUtilities\DiscordDotNetUtilities\obj\Release\net6.0\DiscordDotNetUtilities.pdb
+C:\Users\rrodd\Code\DiscordDotNetUtilities\DiscordDotNetUtilities\obj\Release\net6.0\ref\DiscordDotNetUtilities.dll
