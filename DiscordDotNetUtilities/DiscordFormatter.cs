@@ -4,33 +4,26 @@ using DiscordDotNetUtilities.Interfaces;
 namespace DiscordDotNetUtilities;
 public class DiscordFormatter : IDiscordFormatter
 {
-    private readonly DiscordSettings _discordSettings;
-
-    public DiscordFormatter(DiscordSettings discordSettings)
-    {
-        _discordSettings = discordSettings;
-    }
-
     public Embed BuildRegularEmbed(string title, string messageText, IUser? user = null, IList<EmbedFieldBuilder>? embedFieldBuilders = null, string url = "")
     {
-        return BuildEmbed(title, messageText, user, _discordSettings.EmbedColors.Regular, embedFieldBuilders, url).Build();
+        return BuildEmbed(title, messageText, user, Color.Default, embedFieldBuilders, url).Build();
     }
     public Embed BuildErrorEmbed(string title, string messageText, IUser? user = null, IList<EmbedFieldBuilder>? embedFieldBuilders = null, string url = "")
     {
-        return BuildEmbed(title, messageText, user, _discordSettings.EmbedColors.Error, embedFieldBuilders, url).Build();
+        return BuildEmbed(title, messageText, user, Color.Red, embedFieldBuilders, url).Build();
     }
 
     private EmbedBuilder BuildEmbed(string title,
         string messageText,
         IUser? user = null,
-        uint embedColor = 0,
+        Color? color = null,
         IList<EmbedFieldBuilder>? embedFieldBuilders = null,
         string url = "")
     {
         var embedBuilder = new EmbedBuilder()
             .WithTitle(title)
             .WithDescription(messageText)
-            .WithColor(embedColor == 0 ? _discordSettings.EmbedColors.Regular : embedColor)
+            .WithColor(color ?? Color.Default)
             .WithCurrentTimestamp();
 
         if (user != null)
@@ -65,5 +58,4 @@ public class DiscordFormatter : IDiscordFormatter
     {
         return user.GetAvatarUrl() ?? user.GetDefaultAvatarUrl();
     }
-
 }
