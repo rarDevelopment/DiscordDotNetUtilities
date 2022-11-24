@@ -13,7 +13,7 @@ public class DiscordFormatter : IDiscordFormatter
         return BuildEmbed(title, messageText, user, Color.Red, embedFieldBuilders, url).Build();
     }
 
-    private EmbedBuilder BuildEmbed(string title,
+    private static EmbedBuilder BuildEmbed(string title,
         string messageText,
         IUser? user = null,
         Color? color = null,
@@ -42,20 +42,52 @@ public class DiscordFormatter : IDiscordFormatter
         return embedBuilder;
     }
 
-    private EmbedFooterBuilder BuildEmbedFooter(IUser user)
+    private static EmbedFooterBuilder BuildEmbedFooter(IUser user)
     {
         return new EmbedFooterBuilder()
             .WithText(GetEmbedFooterText(user))
             .WithIconUrl(GetUserAvatar(user));
     }
 
-    private string GetEmbedFooterText(IUser user)
+    private static string GetEmbedFooterText(IUser user)
     {
         return $"Requested by {user.Username}";
     }
 
-    private string GetUserAvatar(IUser user)
+    private static string GetUserAvatar(IUser user)
     {
         return user.GetAvatarUrl() ?? user.GetDefaultAvatarUrl();
+    }
+
+    public IReadOnlyList<string> BuildMessageListFromStringList(IReadOnlyList<string> messagesToCombine, int maxMessageLength,
+        string firstMessageTitle = "", int newLinesAfterFirstMessage = 0)
+    {
+        var messageList = new List<string>();
+        if (!string.IsNullOrEmpty(firstMessageTitle))
+        {
+            var title = $"**{firstMessageTitle}**";
+            for (var i = 0; i < newLinesAfterFirstMessage; i++)
+            {
+                title += "\n";
+            }
+            messageList.Add(title);
+        }
+
+        var listIndex = 0;
+        foreach (var individualMessage in messagesToCombine)
+        {
+            var messageToAdd = $"{individualMessage}\n";
+            var concatenatedMessage = messageList[listIndex] + messageToAdd;
+            if (concatenatedMessage.Length >= maxMessageLength)
+            {
+                messageList.Add(messageToAdd);
+                listIndex++;
+            }
+            else
+            {
+                messageList[listIndex] += messageToAdd;
+            }
+        }
+        return messageList;
     }
 }
