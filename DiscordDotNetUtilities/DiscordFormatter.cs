@@ -59,16 +59,19 @@ public class DiscordFormatter : IDiscordFormatter
         return user.GetAvatarUrl() ?? user.GetDefaultAvatarUrl();
     }
 
-    public IReadOnlyList<string> BuildMessageListFromStringList(IReadOnlyList<string> messagesToCombine, int maxMessageLength,
-        string firstMessageTitle = "", int newLinesAfterFirstMessage = 0)
+    public IReadOnlyList<string> BuildMessageListFromStringList(IReadOnlyList<string> messagesToCombine,
+        int maxMessageLength,
+        string divider = "",
+        string firstMessageTitle = "", 
+        int dividersAfterTitle = 0)
     {
         var messageList = new List<string>();
         if (!string.IsNullOrEmpty(firstMessageTitle))
         {
             var title = $"**{firstMessageTitle}**";
-            for (var i = 0; i < newLinesAfterFirstMessage; i++)
+            for (var i = 0; i < dividersAfterTitle; i++)
             {
-                title += "\n";
+                title += divider;
             }
             messageList.Add(title);
         }
@@ -76,16 +79,23 @@ public class DiscordFormatter : IDiscordFormatter
         var listIndex = 0;
         foreach (var individualMessage in messagesToCombine)
         {
-            var messageToAdd = $"{individualMessage}\n";
-            var concatenatedMessage = messageList[listIndex] + messageToAdd;
-            if (concatenatedMessage.Length >= maxMessageLength)
+            var messageToAdd = $"{individualMessage}{divider}";
+            var concatenatedMessage = messageList.Count > 0 ? messageList[listIndex] + messageToAdd : messageToAdd;
+            if (concatenatedMessage.Length > maxMessageLength)
             {
                 messageList.Add(messageToAdd);
                 listIndex++;
             }
             else
             {
-                messageList[listIndex] += messageToAdd;
+                if(messageList.Count > 0)
+                {
+                    messageList[listIndex] += messageToAdd;
+                }
+                else
+                {
+                    messageList.Add(messageToAdd);
+                }
             }
         }
         return messageList;
