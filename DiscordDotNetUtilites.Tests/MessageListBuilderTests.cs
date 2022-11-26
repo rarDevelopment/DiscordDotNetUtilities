@@ -1,6 +1,6 @@
 ﻿namespace DiscordDotNetUtilities.Tests
 {
-    public class DiscordFormatterTests
+    public class MessageListBuilderTests
     {
         [Theory]
         [InlineData(2000, 100, 200, 2, null, null)]
@@ -9,15 +9,15 @@
         [InlineData(2000, 100, 2000, 0, "\n", null)]
         [InlineData(48339, 500, 43079, 5, "\n\n\n", "big title or something")]
         public void BuildMessageListFromStringList_Success(
-            int maxLength,
+            int maxMessageLength,
             int lengthOfString,
             int numberOfMessages,
             int dividersAfterTitle,
             string? divider,
             string? title)
         {
-            var discordFormatter = new DiscordFormatter();
             var stringList = new List<string>();
+
 
             for (var i = 0; i < numberOfMessages; i++)
             {
@@ -29,9 +29,27 @@
                 stringList.Add(messageToAdd);
             }
 
-            var messageList = discordFormatter.BuildMessageListFromStringList(stringList, maxLength, divider ?? "", title ?? "", dividersAfterTitle);
+            MessageListBuilder discordMessageListBuilder =
+                new MessageListBuilder(stringList, maxMessageLength);
 
-            Assert.All(messageList, s => Assert.True(s.Length <= maxLength));
+            if (!string.IsNullOrEmpty(title))
+            {
+                discordMessageListBuilder = discordMessageListBuilder.WithTitle(title, new[]
+                    {
+                        TextStyleOption.Bold,
+                        TextStyleOption.Italic,
+                        TextStyleOption.Underline,
+                    }, "\n", dividersAfterTitle);
+            }
+
+            if (!string.IsNullOrEmpty(divider))
+            {
+                discordMessageListBuilder = discordMessageListBuilder.WithDivider(divider);
+            }
+
+            var messageList = discordMessageListBuilder.Build();
+
+            Assert.All(messageList, s => Assert.True(s.Length <= maxMessageLength));
         }
     }
 }
