@@ -28,7 +28,7 @@
             var listIndex = 0;
             foreach (var individualMessage in _messagesToCombine)
             {
-                var messageToAdd = $"{individualMessage}{Divider}";
+                var messageToAdd = $"{individualMessage}{Divider ?? ""}";
                 var concatenatedMessage = messageList.Count > 0 ? messageList[listIndex] + messageToAdd : messageToAdd;
                 if (concatenatedMessage.Length > MaxMessageLength)
                 {
