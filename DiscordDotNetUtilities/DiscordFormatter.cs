@@ -4,21 +4,50 @@ using DiscordDotNetUtilities.Interfaces;
 namespace DiscordDotNetUtilities;
 public class DiscordFormatter : IDiscordFormatter
 {
-    public Embed BuildRegularEmbed(string title, string messageText, IUser? user = null, IList<EmbedFieldBuilder>? embedFieldBuilders = null, string url = "")
+    public Embed BuildRegularEmbed(string title,
+        string messageText,
+        IUser user,
+        IList<EmbedFieldBuilder>? embedFieldBuilders = null,
+        string url = "")
     {
-        return BuildEmbed(title, messageText, user, Color.Default, embedFieldBuilders, url).Build();
+        var embedFooterBuilder = SetUpEmbedFooterBuilder(user);
+        return BuildEmbed(title, messageText, Color.Default, embedFieldBuilders, url, embedFooterBuilder).Build();
     }
-    public Embed BuildErrorEmbed(string title, string messageText, IUser? user = null, IList<EmbedFieldBuilder>? embedFieldBuilders = null, string url = "")
+
+    public Embed BuildRegularEmbed(string title,
+        string messageText,
+        EmbedFooterBuilder? embedFooterBuilder,
+        IList<EmbedFieldBuilder>? embedFieldBuilders = null,
+        string url = "")
     {
-        return BuildEmbed(title, messageText, user, Color.Red, embedFieldBuilders, url).Build();
+        return BuildEmbed(title, messageText, Color.Default, embedFieldBuilders, url, embedFooterBuilder).Build();
+    }
+
+    public Embed BuildErrorEmbed(string title,
+        string messageText,
+        IUser user,
+        IList<EmbedFieldBuilder>? embedFieldBuilders = null,
+        string url = "")
+    {
+        var embedFooterBuilder = SetUpEmbedFooterBuilder(user);
+        return BuildEmbed(title, messageText, Color.Red, embedFieldBuilders, url, embedFooterBuilder).Build();
+    }
+
+    public Embed BuildErrorEmbed(string title,
+        string messageText,
+        EmbedFooterBuilder? embedFooterBuilder,
+        IList<EmbedFieldBuilder>? embedFieldBuilders = null,
+        string url = "")
+    {
+        return BuildEmbed(title, messageText, Color.Red, embedFieldBuilders, url, embedFooterBuilder).Build();
     }
 
     private static EmbedBuilder BuildEmbed(string title,
         string messageText,
-        IUser? user = null,
         Color? color = null,
         IList<EmbedFieldBuilder>? embedFieldBuilders = null,
-        string url = "")
+        string url = "",
+        EmbedFooterBuilder? embedFooterBuilder = null)
     {
         var embedBuilder = new EmbedBuilder()
             .WithTitle(title)
@@ -26,10 +55,11 @@ public class DiscordFormatter : IDiscordFormatter
             .WithColor(color ?? Color.Default)
             .WithCurrentTimestamp();
 
-        if (user != null)
+        if (embedFooterBuilder != null)
         {
-            embedBuilder.WithFooter(BuildEmbedFooter(user));
+            embedBuilder.WithFooter(embedFooterBuilder);
         }
+
         if (embedFieldBuilders != null && embedFieldBuilders.Any())
         {
             embedBuilder.WithFields(embedFieldBuilders);
@@ -42,7 +72,7 @@ public class DiscordFormatter : IDiscordFormatter
         return embedBuilder;
     }
 
-    private static EmbedFooterBuilder BuildEmbedFooter(IUser user)
+    private static EmbedFooterBuilder SetUpEmbedFooterBuilder(IUser user)
     {
         return new EmbedFooterBuilder()
             .WithText(GetEmbedFooterText(user))
@@ -57,5 +87,16 @@ public class DiscordFormatter : IDiscordFormatter
     private static string GetUserAvatar(IUser user)
     {
         return user.GetAvatarUrl() ?? user.GetDefaultAvatarUrl();
+    }
+
+    public string ApplyTextStyleOptionToString(string text, TextStyleOption textStyleOption)
+    {
+        return textStyleOption switch
+        {
+            TextStyleOption.Bold => $"**{text}**",
+            TextStyleOption.Italic => $"_{text}_",
+            TextStyleOption.Underline => $"__{text}__",
+            _ => text
+        };
     }
 }
