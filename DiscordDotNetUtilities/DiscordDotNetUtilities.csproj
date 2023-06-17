@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
@@ -9,7 +9,7 @@
 		<Company>$(Authors)</Company>
 		<Description>Discord.NET Utilities</Description>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageVersion>1.4.0</PackageVersion>
+		<PackageVersion>1.5.0</PackageVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -8,38 +8,42 @@ public class DiscordFormatter : IDiscordFormatter
         string messageText,
         IUser user,
         IList<EmbedFieldBuilder>? embedFieldBuilders = null,
-        string url = "")
+        string url = "",
+        string imageUrl = "")
     {
         var embedFooterBuilder = SetUpEmbedFooterBuilder(user);
-        return BuildEmbed(title, messageText, Color.Default, embedFieldBuilders, url, embedFooterBuilder).Build();
+        return BuildEmbed(title, messageText, Color.Default, embedFieldBuilders, url, imageUrl, embedFooterBuilder).Build();
     }
 
     public Embed BuildRegularEmbed(string title,
         string messageText,
         EmbedFooterBuilder? embedFooterBuilder,
         IList<EmbedFieldBuilder>? embedFieldBuilders = null,
-        string url = "")
+        string url = "",
+        string imageUrl = "")
     {
-        return BuildEmbed(title, messageText, Color.Default, embedFieldBuilders, url, embedFooterBuilder).Build();
+        return BuildEmbed(title, messageText, Color.Default, embedFieldBuilders, url, imageUrl, embedFooterBuilder).Build();
     }
 
     public Embed BuildErrorEmbed(string title,
         string messageText,
         IUser user,
         IList<EmbedFieldBuilder>? embedFieldBuilders = null,
-        string url = "")
+        string url = "",
+        string imageUrl = "")
     {
         var embedFooterBuilder = SetUpEmbedFooterBuilder(user);
-        return BuildEmbed(title, messageText, Color.Red, embedFieldBuilders, url, embedFooterBuilder).Build();
+        return BuildEmbed(title, messageText, Color.Red, embedFieldBuilders, url, imageUrl, embedFooterBuilder).Build();
     }
 
     public Embed BuildErrorEmbed(string title,
         string messageText,
         EmbedFooterBuilder? embedFooterBuilder,
         IList<EmbedFieldBuilder>? embedFieldBuilders = null,
-        string url = "")
+        string url = "",
+        string imageUrl = "")
     {
-        return BuildEmbed(title, messageText, Color.Red, embedFieldBuilders, url, embedFooterBuilder).Build();
+        return BuildEmbed(title, messageText, Color.Red, embedFieldBuilders, url, imageUrl, embedFooterBuilder).Build();
     }
 
     private static EmbedBuilder BuildEmbed(string title,
@@ -47,6 +51,7 @@ public class DiscordFormatter : IDiscordFormatter
         Color? color = null,
         IList<EmbedFieldBuilder>? embedFieldBuilders = null,
         string url = "",
+        string imageUrl = "",
         EmbedFooterBuilder? embedFooterBuilder = null)
     {
         var embedBuilder = new EmbedBuilder()
@@ -64,9 +69,15 @@ public class DiscordFormatter : IDiscordFormatter
         {
             embedBuilder.WithFields(embedFieldBuilders);
         }
+
         if (!string.IsNullOrEmpty(url))
         {
             embedBuilder.WithUrl(url);
+        }
+
+        if (!string.IsNullOrEmpty(imageUrl))
+        {
+            embedBuilder.WithImageUrl(imageUrl);
         }
 
         return embedBuilder;
