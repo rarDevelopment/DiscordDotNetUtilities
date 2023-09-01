@@ -4,7 +4,7 @@ using DiscordDotNetUtilities.Interfaces;
 namespace DiscordDotNetUtilities;
 public class DiscordFormatter : IDiscordFormatter
 {
-    public Embed BuildRegularEmbed(string title,
+    public Embed BuildRegularEmbedWithUserFooter(string title,
         string messageText,
         IUser user,
         IList<EmbedFieldBuilder>? embedFieldBuilders = null,
@@ -17,7 +17,7 @@ public class DiscordFormatter : IDiscordFormatter
 
     public Embed BuildRegularEmbed(string title,
         string messageText,
-        EmbedFooterBuilder? embedFooterBuilder,
+        EmbedFooterBuilder? embedFooterBuilder = null,
         IList<EmbedFieldBuilder>? embedFieldBuilders = null,
         string url = "",
         string imageUrl = "")
@@ -25,7 +25,7 @@ public class DiscordFormatter : IDiscordFormatter
         return BuildEmbed(title, messageText, Color.Default, embedFieldBuilders, url, imageUrl, embedFooterBuilder).Build();
     }
 
-    public Embed BuildErrorEmbed(string title,
+    public Embed BuildErrorEmbedWithUserFooter(string title,
         string messageText,
         IUser user,
         IList<EmbedFieldBuilder>? embedFieldBuilders = null,
@@ -38,7 +38,7 @@ public class DiscordFormatter : IDiscordFormatter
 
     public Embed BuildErrorEmbed(string title,
         string messageText,
-        EmbedFooterBuilder? embedFooterBuilder,
+        EmbedFooterBuilder? embedFooterBuilder = null,
         IList<EmbedFieldBuilder>? embedFieldBuilders = null,
         string url = "",
         string imageUrl = "")
