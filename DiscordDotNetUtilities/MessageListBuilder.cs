@@ -1,19 +1,11 @@
 ﻿namespace DiscordDotNetUtilities;
 
-public class MessageListBuilder
+public class MessageListBuilder(IEnumerable<string> messagesToCombine, int maxMessageLength)
 {
-    private readonly IEnumerable<string> _messagesToCombine;
-    private readonly DiscordFormatter _discordFormatter;
-    private int MaxMessageLength { get; }
+    private readonly DiscordFormatter _discordFormatter = new();
+    private int MaxMessageLength { get; } = maxMessageLength;
     private string? Title { get; set; }
     private string? Divider { get; set; }
-
-    public MessageListBuilder(IEnumerable<string> messagesToCombine, int maxMessageLength)
-    {
-        MaxMessageLength = maxMessageLength;
-        _messagesToCombine = messagesToCombine;
-        _discordFormatter = new DiscordFormatter();
-    }
 
     /// <summary>
     ///     Build the list of messages with the specified maximum message length.
@@ -28,7 +20,7 @@ public class MessageListBuilder
         }
 
         var listIndex = 0;
-        foreach (var individualMessage in _messagesToCombine)
+        foreach (var individualMessage in messagesToCombine)
         {
             var messageToAdd = $"{individualMessage}{Divider ?? ""}";
             var concatenatedMessage = messageList.Count > 0 ? messageList[listIndex] + messageToAdd : messageToAdd;

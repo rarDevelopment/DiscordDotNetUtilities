@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -9,7 +9,7 @@
 		<Company>$(Authors)</Company>
 		<Description>Discord.NET Utilities</Description>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageVersion>1.7.0</PackageVersion>
+		<PackageVersion>1.8.0</PackageVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -20,7 +20,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Discord.Net" Version="3.10.0" />
+		<PackageReference Include="Discord.Net" Version="3.18.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.8" />
 	</ItemGroup>
 
 	<ItemGroup>
